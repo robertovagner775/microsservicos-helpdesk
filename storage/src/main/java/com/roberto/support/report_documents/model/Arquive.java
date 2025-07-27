@@ -1,0 +1,67 @@
+package com.roberto.support.report_documents.model;
+
+
+import com.roberto.support.report_documents.dtos.FileDTO;
+
+public class Arquive {
+
+    private String key;
+    private String filename;
+    private String type;
+    private String bucket;
+
+    public Arquive() {
+    }
+
+    public Arquive(String key, String filename, String type, String bucket) {
+        this.key = key;
+        this.filename = filename;
+        this.type = type;
+        this.bucket = bucket;
+    }
+
+    public Arquive(FileDTO fileDTO) {
+        this.key = fileDTO.key();
+        this.bucket = fileDTO.bucket();
+        this.type = fileDTO.filetype();
+        this.filename = fileDTO.filename();
+    }
+
+    public Arquive(String filename, String type, String bucket) {
+        this.filename = filename;
+        this.type = type;
+        this.bucket = bucket;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setId(String key) {
+        this.key = key;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(String bucket) {
+        this.bucket = bucket;
+    }
+}

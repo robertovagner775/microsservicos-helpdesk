@@ -1,0 +1,1 @@
+ALTER TABLE TECHNICAL ADD COLUMN average_satisfaction DECIMAL(10, 2)

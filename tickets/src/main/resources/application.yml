@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: tickets-ms
+  profiles:
+    active: localstack
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/suporteTecnico
+    username: root
+    password: 021978
+  mvc:
+    web:
+      resources:
+        add-mappings: false
+    problem details:
+      enabled: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: 123456
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+
+cloud:
+  aws:
+    endpoint:
+      uri: http://localhost:4566
+    s3:
+      endpoint: http://s3.localhost.localstack.cloud:4566/
+    region:
+      static: us-east-1
+    credentials:
+      access-key: test
+      secret-key: test
+server:
+  port: 8080
+  error:
+    include-stacktrace: never
+    whitelabel:
+      enabled: false
+
+
