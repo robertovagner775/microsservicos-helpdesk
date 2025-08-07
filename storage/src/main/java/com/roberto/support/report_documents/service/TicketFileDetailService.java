@@ -5,9 +5,10 @@ import com.roberto.support.report_documents.config.constants.FileConstants;
 import com.roberto.support.report_documents.dtos.FileDTO;
 import com.roberto.support.report_documents.config.AwsS3Client;
 import com.roberto.support.report_documents.config.constants.AwsConstants;
-import com.roberto.support.report_documents.model.Arquive;
+import com.roberto.support.report_documents.model.Archive;
 import com.roberto.support.report_documents.model.FileTicket;
 import com.roberto.support.report_documents.repository.FileTicketRepository;
+import com.roberto.support.report_documents.validation.FileValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,13 +20,11 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+
 
 @Service
-public class StorageService {
+public class TicketFileDetailService {
 
     @Autowired
     private FileTicketRepository fileTicketRepository;
@@ -33,9 +32,14 @@ public class StorageService {
     @Autowired
     private AwsS3Client awsS3Client;
 
+    @Autowired
+    private FileValidation fileValidation;
+
     public void insertFileAws(List<MultipartFile> multipartFiles, Integer idTicket) throws IOException {
 
         List<FileDTO> fileDTOS = new ArrayList<FileDTO>();
+
+        fileValidation.validate(multipartFiles);
 
         for (MultipartFile multipartFile : multipartFiles) {
             File file = this.multipartToFile(multipartFile);
@@ -45,20 +49,19 @@ public class StorageService {
             fileDTOS.add(fileDTO);
             file.delete();
         }
-
        FileTicket fileTicket = this.saveFile(fileDTOS, idTicket);
         fileTicketRepository.save(fileTicket);
     }
 
     public FileTicket saveFile(List<FileDTO> files, Integer idTicket) {
         Optional<FileTicket> fileTicket = fileTicketRepository.findById(idTicket);
-        List<Arquive> arquives = files.stream().map(Arquive::new).toList();
+        List<Archive> archives = files.stream().map(Archive::new).toList();
 
         if(fileTicket.isPresent()) {
-           fileTicket.get().getFiles().addAll(arquives);
+           fileTicket.get().getFiles().addAll(archives);
            return fileTicket.get();
         }
-        return new FileTicket(idTicket, arquives);
+        return new FileTicket(idTicket, archives);
     }
 
     public  File multipartToFile(MultipartFile multipart) throws IOException {

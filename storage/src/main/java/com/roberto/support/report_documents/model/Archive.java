@@ -3,31 +3,31 @@ package com.roberto.support.report_documents.model;
 
 import com.roberto.support.report_documents.dtos.FileDTO;
 
-public class Arquive {
+public class Archive {
 
     private String key;
     private String filename;
     private String type;
     private String bucket;
 
-    public Arquive() {
+    public Archive() {
     }
 
-    public Arquive(String key, String filename, String type, String bucket) {
+    public Archive(String key, String filename, String type, String bucket) {
         this.key = key;
         this.filename = filename;
         this.type = type;
         this.bucket = bucket;
     }
 
-    public Arquive(FileDTO fileDTO) {
+    public Archive(FileDTO fileDTO) {
         this.key = fileDTO.key();
         this.bucket = fileDTO.bucket();
         this.type = fileDTO.filetype();
         this.filename = fileDTO.filename();
     }
 
-    public Arquive(String filename, String type, String bucket) {
+    public Archive(String filename, String type, String bucket) {
         this.filename = filename;
         this.type = type;
         this.bucket = bucket;
