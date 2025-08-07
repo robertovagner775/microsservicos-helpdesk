@@ -10,14 +10,14 @@ public class FileTicket {
 
     @Id
     private Integer idTicket;
-    private List<Arquive> Arquives;
+    private List<Archive> files;
 
     public FileTicket() {
     }
 
-    public FileTicket(Integer idTicket, List<Arquive> arquives) {
+    public FileTicket(Integer idTicket, List<Archive> files) {
         this.idTicket = idTicket;
-        Arquives = arquives;
+        this.files = files;
     }
 
     public FileTicket(Integer idTicket) {
@@ -32,8 +32,8 @@ public class FileTicket {
         this.idTicket = idTicket;
     }
 
-    public List<Arquive> getFiles() {
-        return Arquives;
+    public List<Archive> getFiles() {
+        return files;
     }
 
 }

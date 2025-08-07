@@ -1,7 +1,7 @@
 package com.roberto.support.report_documents.controller;
 
 
-import com.roberto.support.report_documents.service.StorageService;
+import com.roberto.support.report_documents.service.TicketFileDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ import java.util.List;
 public class FileController {
 
     @Autowired
-    private StorageService storageService;
+    private TicketFileDetailService ticketFileDetailService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity addFileTicket(@PathVariable Integer id, @RequestPart("files") List<MultipartFile> files) throws IOException {
@@ -26,7 +26,7 @@ public class FileController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You can only upload up to 3 files at a time.");
         }
 
-        storageService.insertFileAws(files, id);
+        ticketFileDetailService.insertFileAws(files, id);
 
         return ResponseEntity.ok().build();
 	}
