@@ -1,6 +1,9 @@
 package com.roberto.support.report_documents.service;
 
+import com.amazonaws.HttpMethod;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.ResponseHeaderOverrides;
 import com.roberto.support.report_documents.config.AwsS3Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +25,18 @@ public class StorageS3Service {
         return key;
     }
     
-    public URL generateUrl(String bucket, String filename) {
-        int timeExpiration = 1000 * 60 * 10;
-        Date expiration = new Date(timeExpiration);
-        URL url = s3Client.s3Client().generatePresignedUrl(bucket, filename, expiration);
-        return url;
+    public URL generateUrl(String bucket, String contentType,  String filename) {
+        Date expiration = new Date(1000 * 60 * 10);
+
+        ResponseHeaderOverrides headers = new ResponseHeaderOverrides()
+                .withContentType(contentType)
+                .withContentDisposition("attachment; filename=\"" + filename + "\"");
+
+        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucket, filename)
+                .withMethod(HttpMethod.GET)
+                .withExpiration(expiration)
+                .withResponseHeaders(headers);
+
+        return s3Client.s3Client().generatePresignedUrl(request);
     }
 }
