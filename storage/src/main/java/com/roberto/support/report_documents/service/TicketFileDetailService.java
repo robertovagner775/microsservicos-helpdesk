@@ -1,10 +1,9 @@
 package com.roberto.support.report_documents.service;
 
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.roberto.support.report_documents.config.constants.FileConstants;
 import com.roberto.support.report_documents.dtos.FileDTO;
-import com.roberto.support.report_documents.config.AwsS3Client;
 import com.roberto.support.report_documents.config.constants.AwsConstants;
+import com.roberto.support.report_documents.dtos.TicketDetailsResponseDTO;
 import com.roberto.support.report_documents.model.Archive;
 import com.roberto.support.report_documents.model.FileTicket;
 import com.roberto.support.report_documents.repository.FileTicketRepository;
@@ -30,7 +29,7 @@ public class TicketFileDetailService {
     private FileTicketRepository fileTicketRepository;
 
     @Autowired
-    private AwsS3Client awsS3Client;
+    private StorageS3Service storageS3Service;
 
     @Autowired
     private FileValidation fileValidation;
@@ -43,14 +42,26 @@ public class TicketFileDetailService {
 
         for (MultipartFile multipartFile : multipartFiles) {
             File file = this.multipartToFile(multipartFile);
-            String key = UUID.randomUUID() + "_" + FileConstants.TICKET_FILE_NAME;
-            awsS3Client.s3Client().putObject(new PutObjectRequest(AwsConstants.BUCKET_TICKET_DETAILS, key, file));
+            String key = storageS3Service.uploadFile(file, FileConstants.TICKET_FILE_NAME, AwsConstants.BUCKET_TICKET_DETAILS);
             FileDTO fileDTO = new FileDTO(key, multipartFile.getOriginalFilename(), multipartFile.getContentType(), AwsConstants.BUCKET_TICKET_DETAILS);
             fileDTOS.add(fileDTO);
             file.delete();
         }
        FileTicket fileTicket = this.saveFile(fileDTOS, idTicket);
         fileTicketRepository.save(fileTicket);
+    }
+
+    public List<TicketDetailsResponseDTO> findAllTicketFilesByID(Integer id) {
+
+        FileTicket files = fileTicketRepository.findById(id).get();
+
+        List<TicketDetailsResponseDTO> logFiles = files.getFiles().stream().map(
+                a -> new TicketDetailsResponseDTO(
+                        a.getFilename(),
+                        a.getType(),
+                        storageS3Service.generateUrl(a.getBucket(),a.getType(),  a.getKey()).toString()))
+                .toList();
+        return logFiles;
     }
 
     public FileTicket saveFile(List<FileDTO> files, Integer idTicket) {
