@@ -19,28 +19,11 @@ spring:
     port: 5672
     username: admin
     password: 123456
-
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8081/eureka
-
-cloud:
-  aws:
-    endpoint:
-      uri: http://localhost:4566
-    s3:
-      endpoint: http://s3.localhost.localstack.cloud:4566/
-    region:
-      static: us-east-1
-    credentials:
-      access-key: test
-      secret-key: test
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
 server:
-  port: 8080
-  error:
-    include-stacktrace: never
-    whitelabel:
-      enabled: false
-
-
+  port: 0
