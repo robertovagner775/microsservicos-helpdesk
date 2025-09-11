@@ -2,8 +2,8 @@ package com.roberto.ticket.services;
 
 import com.roberto.ticket.dtos.requests.ClientRequestDTO;
 import com.roberto.ticket.dtos.responses.ClientResponseDTO;
-import com.roberto.ticket.entities.Client;
-import com.roberto.ticket.entities.Users;
+import com.roberto.ticket.models.entities.Client;
+import com.roberto.ticket.models.entities.Users;
 import com.roberto.ticket.repositories.ClientRepository;
 import com.roberto.ticket.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;

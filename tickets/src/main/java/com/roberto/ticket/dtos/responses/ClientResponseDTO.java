@@ -1,10 +1,8 @@
 package com.roberto.ticket.dtos.responses;
 
-import com.roberto.ticket.entities.Client;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(name = "Client")
 public record ClientResponseDTO(Integer id, String name, String email, String telephone) {
 
-    public ClientResponseDTO(Client client) {
-        this(client.getId(), client.getName(), client.getUser().getUsername(), client.getTelephone());
-    }
 }

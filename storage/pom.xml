@@ -41,7 +41,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
 			<version>${spring-doc.version}</version>
 		</dependency>
 
@@ -57,20 +57,18 @@
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
 			<artifactId>jakarta.xml.bind-api</artifactId>
-			<version>2.3.3</version>
+			<version>4.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.3.3</version>
+			<version>4.0.0</version>
 			<scope>runtime</scope>
 		</dependency>
-
-		<!-- Apache HTTP Client atualizado -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.13</version> <!-- versão estável ≥ 4.5.9 -->
+			<version>4.5.13</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -143,8 +141,8 @@
 							<artifactId>lombok</artifactId>
 						</path>
 					</annotationProcessorPaths>
-					<source>23</source>
-					<target>23</target>
+					<source>17</source>
+					<target>17</target>
 				</configuration>
 			</plugin>
 			<plugin>

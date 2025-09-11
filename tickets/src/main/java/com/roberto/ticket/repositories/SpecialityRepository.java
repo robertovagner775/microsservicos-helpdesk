@@ -1,6 +1,6 @@
 package com.roberto.ticket.repositories;
 
-import com.roberto.ticket.entities.Speciality;
+import com.roberto.ticket.models.entities.Speciality;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

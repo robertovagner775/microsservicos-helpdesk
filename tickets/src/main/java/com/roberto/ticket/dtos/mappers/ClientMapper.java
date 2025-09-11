@@ -2,7 +2,7 @@ package com.roberto.ticket.dtos.mappers;
 
 import com.roberto.ticket.dtos.requests.ClientRequestDTO;
 import com.roberto.ticket.dtos.responses.ClientResponseDTO;
-import com.roberto.ticket.entities.Client;
+import com.roberto.ticket.models.entities.Client;
 
 public class ClientMapper {
 

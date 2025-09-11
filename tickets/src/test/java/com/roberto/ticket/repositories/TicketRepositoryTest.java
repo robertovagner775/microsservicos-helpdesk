@@ -2,10 +2,10 @@ package com.roberto.ticket.repositories;
 
 import com.roberto.ticket.dtos.requests.ClientRequestDTO;
 import com.roberto.ticket.dtos.requests.TicketRequestDTO;
-import com.roberto.ticket.entities.Client;
-import com.roberto.ticket.entities.Ticket;
-import com.roberto.ticket.entities.Users;
-import com.roberto.ticket.entities.enums.Priority;
+import com.roberto.ticket.models.entities.Client;
+import com.roberto.ticket.models.entities.Ticket;
+import com.roberto.ticket.models.entities.Users;
+import com.roberto.ticket.models.enums.Priority;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

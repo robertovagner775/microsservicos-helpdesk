@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.roberto.ticket.dtos.messages.TicketMessageDTO;
-import com.roberto.ticket.entities.Category;
+import com.roberto.ticket.models.entities.Category;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.roberto.ticket.dtos.requests.TicketRequestDTO;
 import com.roberto.ticket.dtos.responses.TechnicalDTO;
 import com.roberto.ticket.dtos.responses.TicketResponseDTO;
-import com.roberto.ticket.entities.Client;
-import com.roberto.ticket.entities.Ticket;
-import com.roberto.ticket.entities.enums.Priority;
+import com.roberto.ticket.models.entities.Client;
+import com.roberto.ticket.models.entities.Ticket;
+import com.roberto.ticket.models.enums.Priority;
 
 public class TicketMapper {
 

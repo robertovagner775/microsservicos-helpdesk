@@ -3,10 +3,10 @@ package com.roberto.ticket.services;
 import com.roberto.ticket.dtos.mappers.ClientMapper;
 import com.roberto.ticket.dtos.requests.ClientRequestDTO;
 import com.roberto.ticket.dtos.responses.ClientResponseDTO;
-import com.roberto.ticket.exceptions.ConflictEntityException;
-import com.roberto.ticket.exceptions.NotFoundException;
-import com.roberto.ticket.entities.Client;
-import com.roberto.ticket.entities.Users;
+import com.roberto.ticket.handler.exceptions.ConflictEntityException;
+import com.roberto.ticket.handler.exceptions.NotFoundException;
+import com.roberto.ticket.models.entities.Client;
+import com.roberto.ticket.models.entities.Users;
 import com.roberto.ticket.repositories.ClientRepository;
 import com.roberto.ticket.repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -39,7 +39,7 @@ public class ClientService {
     public Client findClientByID(Integer id) {
 
        Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Recurso não foi encontrado ID: ", id.toString()));
+                .orElseThrow(() -> new NotFoundException(id.toString()));
 
        return client;
     }

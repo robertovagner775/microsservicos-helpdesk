@@ -1,10 +1,9 @@
 package com.roberto.ticket.producers;
 
-import com.roberto.ticket.config.constants.RabbitMQConstants;
+import com.roberto.ticket.configs.constants.RabbitMQConstants;
 import com.roberto.ticket.dtos.messages.CategoryMessageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 

@@ -1,6 +1,6 @@
 spring:
     application:
-        name: report-documents
+        name: storage-ms
     rabbitmq:
         host: localhost
         port: 5672
@@ -26,6 +26,8 @@ eureka:
         service-url:
             defaultZone: http://localhost:8081/eureka
     instance:
-        instance-id: ${spring.application.name}:${random.int}
+        hostname: localhost
+        non-secure-port: ${server.port}
+        prefer-ip-address: true
 server:
-    port: 0
+    port: 8084
