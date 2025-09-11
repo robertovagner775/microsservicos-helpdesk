@@ -1,7 +1,7 @@
 package com.roberto.ticket.repositories;
 
 
-import com.roberto.ticket.entities.Category;
+import com.roberto.ticket.models.entities.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

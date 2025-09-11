@@ -1,10 +1,12 @@
 package com.roberto.ticket.dtos.responses;
 
-import com.roberto.ticket.entities.Technical;
+import com.roberto.ticket.models.entities.Technical;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Schema(name = "Technical")
 public record TechnicalResponseDTO(Integer id, String name, String email, String telephone, List<String> specialities, Boolean available) {
 
     public TechnicalResponseDTO(Technical tec) {

@@ -2,10 +2,10 @@ package com.roberto.ticket.services;
 
 import com.roberto.ticket.dtos.requests.TechnicalRequestDTO;
 import com.roberto.ticket.dtos.responses.TechnicalResponseDTO;
-import com.roberto.ticket.exceptions.ConflictEntityException;
-import com.roberto.ticket.entities.Speciality;
-import com.roberto.ticket.entities.Technical;
-import com.roberto.ticket.entities.Users;
+import com.roberto.ticket.handler.exceptions.ConflictEntityException;
+import com.roberto.ticket.models.entities.Speciality;
+import com.roberto.ticket.models.entities.Technical;
+import com.roberto.ticket.models.entities.Users;
 import com.roberto.ticket.repositories.SpecialityRepository;
 import com.roberto.ticket.repositories.TechnicalRepository;
 import com.roberto.ticket.repositories.UserRepository;

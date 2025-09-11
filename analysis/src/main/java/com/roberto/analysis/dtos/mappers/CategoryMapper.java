@@ -2,6 +2,7 @@ package com.roberto.analysis.dtos.mappers;
 
 
 import com.roberto.analysis.dtos.messages.CategoryMessageDTO;
+import com.roberto.analysis.dtos.responses.CategoryDTO;
 import com.roberto.analysis.entities.Category;
 
 public class CategoryMapper {
@@ -12,5 +13,9 @@ public class CategoryMapper {
 
     public static Category messageToEntity(CategoryMessageDTO message) {
         return new Category(message.id(), message.title(), message.description());
+    }
+
+    public static CategoryDTO toResponse(Category category) {
+        return new CategoryDTO(category.getId(), category.getTitle(), category.getDescription());
     }
 }

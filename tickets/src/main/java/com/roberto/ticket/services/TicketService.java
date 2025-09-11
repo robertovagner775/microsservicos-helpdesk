@@ -1,18 +1,18 @@
 package com.roberto.ticket.services;
 
 import com.roberto.ticket.dtos.responses.TicketResponseDTO;
-import com.roberto.ticket.entities.Category;
-import com.roberto.ticket.entities.enums.Status;
+import com.roberto.ticket.models.entities.Category;
+import com.roberto.ticket.models.enums.Status;
 import com.roberto.ticket.repositories.Specs.TicketSpecs;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.roberto.ticket.exceptions.NotFoundException;
-import com.roberto.ticket.entities.Ticket;
-import com.roberto.ticket.entities.Client;
-import com.roberto.ticket.entities.Technical;
+import com.roberto.ticket.handler.exceptions.NotFoundException;
+import com.roberto.ticket.models.entities.Ticket;
+import com.roberto.ticket.models.entities.Client;
+import com.roberto.ticket.models.entities.Technical;
 import com.roberto.ticket.dtos.mappers.TicketMapper;
 import com.roberto.ticket.dtos.requests.TicketRequestDTO;
 import com.roberto.ticket.repositories.TicketRepository;
@@ -28,20 +28,15 @@ import java.util.Optional;
 public class TicketService {
 
 	private final TicketRepository ticketRepository;
-
 	private final ClientRepository clientRepository;
-
 	private final  TechnicalService technicalService;
-
 	private final CategoryService categoryService;
 
 	@Transactional
 	public Ticket createTicket(TicketRequestDTO ticketRequest, Integer idClient) {
 		
-		Client client = clientRepository.findById(idClient).orElseThrow(() -> new NotFoundException("Recurso não foi encontrado ID: ", idClient.toString()));
-
+		Client client = clientRepository.findById(idClient).orElseThrow(() -> new NotFoundException(idClient.toString()));
 		Category category = categoryService.findCategoryById(ticketRequest.categoryID());
-
 		Ticket ticket = TicketMapper.toEntity(ticketRequest, client, category);
 
 		Technical technical = technicalService.assignTicketToTechnical(ticket);
@@ -57,23 +52,23 @@ public class TicketService {
 	}
 
 	public void deleteTicket(Integer idClient, Integer idTicket) {
-
 		Optional<Ticket> ticket = ticketRepository.findByidClientAndIdTicket(idClient, idTicket);
-
 		if(ticket.isPresent()) {
 			ticket.get().getTechnicals().clear();
 			ticketRepository.delete(ticket.get());
+		} else {
+			throw new NotFoundException(idTicket.toString());
 		}
 	}
 
 	public Ticket findByID(Integer idTicket) {
-		return ticketRepository.findById(idTicket).orElseThrow(() -> new NotFoundException("Recurso não encontrado ID: ", idTicket.toString()));
+		return ticketRepository.findById(idTicket).orElseThrow(() -> new NotFoundException(idTicket.toString()));
 	}
 
-	public Ticket updateStatusTicket(Integer idticket, Status status) {
-		Ticket ticket = ticketRepository.findById(idticket).orElseThrow(() -> new NotFoundException());
+	public void updateStatusTicket(Integer idticket, Status status) {
+		Ticket ticket = this.findByID(idticket);
 		ticket.setStatus(status);
-		return ticketRepository.save(ticket);
+		ticketRepository.save(ticket);
 	}
 
 	public List<TicketResponseDTO> findAllTickets(String title, String status, LocalDate dateStart) {

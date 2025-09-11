@@ -19,4 +19,12 @@ spring:
               lower-case-service-id: true
 
            
-   
+springdoc:
+  swagger-ui:
+    urls:
+      - name: Ticket Service
+        url: /tickets-ms/v3/api-docs
+      - name: Storage Service
+        url: /storage-ms/v3/api-docs
+      - name: Analysis Service
+        url: /analysis-ms/v3/api-docs

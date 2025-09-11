@@ -1,16 +1,11 @@
 spring:
   application:
-     name: analysis
+     name: analysis-ms
   rabbitmq:
     host: localhost
     port: 5672
     username: admin
     password: 123456
-    listener:
-       simple:
-          retry:
-            enabled: true
-            max-attempts: 1
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/analysis_db
@@ -18,11 +13,16 @@ spring:
     password: 021978
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
+
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8081/eureka
   instance:
-    instance-id: ${spring.application.name}:${random.int}
+    hostname: localhost
+    non-secure-port: ${server.port}
+    prefer-ip-address: true
 server:
-  port: 0
+  port: 8085
+  forward-headers-strategy: framework

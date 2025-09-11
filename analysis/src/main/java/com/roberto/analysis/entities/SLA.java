@@ -16,9 +16,22 @@ import java.util.List;
 @Entity
 public class SLA {
 
+    public SLA(String id, String title, String description, Integer responseMin, Integer resolutionMin, Category category) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.timeResponseMins = responseMin;
+        this.timeResolutionMins = resolutionMin;
+        this.categories.add(category);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+
+    private String title;
+
+    private String description;
 
     @Column(name = "TIME_RESPONSE_MIN", nullable = false)
     private Integer timeResponseMins;
@@ -27,5 +40,5 @@ public class SLA {
     private Integer timeResolutionMins;
 
     @OneToMany(mappedBy = "sla")
-    private List<Category> categories = new ArrayList<>();
+    private List<Category> categories = new ArrayList<Category>();
 }

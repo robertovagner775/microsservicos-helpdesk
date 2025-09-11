@@ -1,10 +1,10 @@
 package com.roberto.ticket.services;
 
 
-import com.roberto.ticket.exceptions.ConflictEntityException;
-import com.roberto.ticket.entities.Speciality;
-import com.roberto.ticket.entities.Ticket;
-import com.roberto.ticket.entities.Users;
+import com.roberto.ticket.handler.exceptions.ConflictEntityException;
+import com.roberto.ticket.models.entities.Speciality;
+import com.roberto.ticket.models.entities.Ticket;
+import com.roberto.ticket.models.entities.Users;
 import com.roberto.ticket.repositories.SpecialityRepository;
 import com.roberto.ticket.repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -13,8 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.roberto.ticket.exceptions.NotFoundException;
-import com.roberto.ticket.entities.Technical;
+import com.roberto.ticket.handler.exceptions.NotFoundException;
+import com.roberto.ticket.models.entities.Technical;
 import com.roberto.ticket.dtos.mappers.TechnicalMapper;
 import com.roberto.ticket.dtos.requests.TechnicalRequestDTO;
 import com.roberto.ticket.dtos.responses.TechnicalResponseDTO;
@@ -44,8 +44,8 @@ public class TechnicalService {
         Set<Speciality> specialities = new HashSet<>();
 
         if (technical.specialities() != null && !technical.specialities().isEmpty()) {
-            List<Speciality> specialitiesRetorno = specialityRepository.findAllById(technical.specialities());
-            if(specialitiesRetorno.size() != 0) specialities.addAll(specialitiesRetorno);
+            List<Speciality> specialitiesReturned = specialityRepository.findAllById(technical.specialities());
+            if(specialitiesReturned.size() != 0) specialities.addAll(specialitiesReturned);
         }
 
         Users user = new Users(technical.email(), technical.password());
@@ -58,14 +58,14 @@ public class TechnicalService {
         return new TechnicalResponseDTO(tec);
     }
 
-    public Page<TechnicalResponseDTO> listar(Pageable paginacao) {
-        return technicalRepository.findAll(paginacao).map(TechnicalResponseDTO::new);
+    public Page<TechnicalResponseDTO> listAllTechnicals(Pageable pageable) {
+        return technicalRepository.findAll(pageable).map(TechnicalResponseDTO::new);
     }
 
     public void updateTechnical(TechnicalRequestDTO request, Integer id) {
 
         Technical technical = technicalRepository.findById(id).orElseThrow(
-                () -> new NotFoundException("Recurso não foi encontrado ID: ", id.toString())
+                () -> new NotFoundException(id.toString())
         );
         List<Speciality> specialities = specialityRepository.findAllById(request.specialities());
 
@@ -77,8 +77,9 @@ public class TechnicalService {
     }
 
     public TechnicalResponseDTO findByTechnical(Integer id) {
-        Technical tec = technicalRepository.findById(id).orElseThrow(() -> new NotFoundException("Recurso não foi encontrado ID: ", id.toString()));
-
+        Technical tec = technicalRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(id.toString())
+        );
        return TechnicalMapper.toTechnicalResponseDTO(tec);
     }
 

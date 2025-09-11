@@ -2,7 +2,7 @@ package com.roberto.support.storage.validation;
 
 import com.roberto.support.storage.config.constants.ErrorConstants;
 import com.roberto.support.storage.handler.exceptions.FileException;
-import com.roberto.support.storage.model.enums.Extension;
+import com.roberto.support.storage.models.enums.Extension;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

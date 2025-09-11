@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.roberto.ticket.dtos.requests.TechnicalRequestDTO;
 import com.roberto.ticket.dtos.responses.TechnicalResponseDTO;
-import com.roberto.ticket.entities.Technical;
+import com.roberto.ticket.models.entities.Technical;
 
 public class TechnicalMapper {
 

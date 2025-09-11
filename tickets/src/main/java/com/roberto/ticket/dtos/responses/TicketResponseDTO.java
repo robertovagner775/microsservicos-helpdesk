@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.roberto.ticket.entities.Ticket;
+import com.roberto.ticket.models.entities.Ticket;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(name = "Ticket")
 public record TicketResponseDTO(Integer id, String title, String description, Integer cliente_id, List<TechnicalDTO> technicals,
 								String status, LocalDate dataStart
 

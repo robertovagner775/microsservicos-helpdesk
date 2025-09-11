@@ -1,0 +1,23 @@
+package com.roberto.ticket.models.entities;
+
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Category {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+    private String title;
+    private String description;
+
+}

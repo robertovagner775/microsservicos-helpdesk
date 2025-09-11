@@ -1,6 +1,6 @@
 package com.roberto.ticket.repositories.Specs;
 
-import com.roberto.ticket.entities.Ticket;
+import com.roberto.ticket.models.entities.Ticket;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
