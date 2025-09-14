@@ -5,6 +5,7 @@ import com.roberto.support.storage.dtos.TicketMessageDTO;
 import com.roberto.support.storage.dtos.responses.FileDTO;
 import com.roberto.support.storage.config.constants.AwsConstants;
 import com.roberto.support.storage.dtos.responses.TicketDetailsResponseDTO;
+import com.roberto.support.storage.handler.exceptions.NotFoundException;
 import com.roberto.support.storage.models.Archive;
 import com.roberto.support.storage.models.FileTicket;
 import com.roberto.support.storage.repositories.FileTicketRepository;
@@ -32,7 +33,7 @@ public class TicketFileDetailService  {
 
     private final FileValidation fileValidation;
 
-    public void insertFileAws(List<MultipartFile> multipartFiles, Integer idTicket) throws IOException {
+    public void uploadNewFIleAWS(List<MultipartFile> multipartFiles, Integer idTicket) throws IOException {
 
         List<FileDTO> fileDTOS = new ArrayList<FileDTO>();
 
@@ -49,32 +50,35 @@ public class TicketFileDetailService  {
         fileTicketRepository.save(fileTicket);
     }
 
-    public FileTicket createFileTicketEmpty(TicketMessageDTO message) {
+    public void createFileTicketEmpty(TicketMessageDTO message) {
         FileTicket file = new FileTicket();
         file.setIdTicket(message.id());
-        return fileTicketRepository.save(file);
+        fileTicketRepository.save(file);
     }
 
     public List<TicketDetailsResponseDTO> findAllTicketFilesByID(Integer id) {
 
-        FileTicket files = fileTicketRepository.findById(id).get();
+        Optional<FileTicket> files = fileTicketRepository.findById(id);
 
-        List<TicketDetailsResponseDTO> logFiles = files.getFiles().stream().map(
+        if(files.isEmpty())
+            throw new NotFoundException(id.toString());
+
+        return files.get().getFiles().stream().map(
                 a -> new TicketDetailsResponseDTO(
                         a.getFilename(),
                         a.getType(),
                         storageS3Service.generateUrl(a.getBucket(),a.getType(),  a.getKey()).toString()))
                 .toList();
-        return logFiles;
     }
 
     public FileTicket saveFile(List<FileDTO> files, Integer idTicket) {
-        Optional<FileTicket> fileTicket = fileTicketRepository.findById(idTicket);
+        FileTicket fileTicket = fileTicketRepository.findById(idTicket).orElseThrow(() -> new NotFoundException(idTicket.toString()));
+
         List<Archive> archives = files.stream().map(Archive::new).toList();
 
-        if(fileTicket.isPresent()) {
-           fileTicket.get().getFiles().addAll(archives);
-           return fileTicket.get();
+        if(fileTicket.getFiles().size() >= 1) {
+           fileTicket.getFiles().addAll(archives);
+           return fileTicket;
         }
         return new FileTicket(idTicket, archives);
     }

@@ -1,4 +1,4 @@
-package com.roberto.support.storage.controller;
+package com.roberto.support.storage.controllers;
 
 
 import com.roberto.support.storage.dtos.responses.TicketDetailsResponseDTO;
@@ -30,11 +30,11 @@ public class TicketFileController {
             @ApiResponse(responseCode = "201", description = "created success")
     })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity addFileTicket(@PathVariable Integer id, @RequestPart("files") List<MultipartFile> files) throws IOException {
+	public ResponseEntity uploadFileTicket(@PathVariable Integer id, @RequestPart("files") List<MultipartFile> files) throws IOException {
         if (files.size() > 3) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You can only upload up to 3 files at a time.");
         }
-        ticketFileDetailService.insertFileAws(files, id);
+        ticketFileDetailService.uploadNewFIleAWS(files, id);
         return ResponseEntity.ok().build();
 	}
 

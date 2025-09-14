@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -85,7 +86,8 @@ class TicketFileDetailServiceTest {
         when(storageS3Service.uploadFile(fileMock, FileConstants.TICKET_FILE_NAME, AwsConstants.BUCKET_TICKET_DETAILS)).thenReturn(keyTest);
         when(storageS3Service.uploadFile(fileMock2, FileConstants.TICKET_FILE_NAME, AwsConstants.BUCKET_TICKET_DETAILS)).thenReturn(keyTest2);
 
-        ticketFileDetailService.insertFileAws(arquivos ,1);
+
+        ticketFileDetailService.uploadNewFIleAWS(arquivos ,1);
 
         var captor = ArgumentCaptor.forClass(FileTicket.class);
         verify(fileValidation, times(1)).validate(arquivos);
