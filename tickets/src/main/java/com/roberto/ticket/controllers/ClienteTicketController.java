@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.roberto.ticket.models.entities.Ticket;
 import com.roberto.ticket.dtos.requests.TicketRequestDTO;
 import com.roberto.ticket.dtos.responses.TicketResponseDTO;

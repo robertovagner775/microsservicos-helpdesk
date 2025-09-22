@@ -1,15 +1,23 @@
 spring:
     application:
         name: storage-ms
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/storage_db
+        username: root
+        password: 021978
     rabbitmq:
         host: localhost
         port: 5672
         username: admin
         password: 123456
-    data:
-        mongodb:
-            uri: mongodb://localhost:27017/storage-db
-            auto-index-creation: true
+        listener:
+            simple:
+                retry:
+                    initial-interval: 5000
+                    multiplier: 1
+                    max-interval: 300000
+
 cloud:
     aws:
         endpoint:
