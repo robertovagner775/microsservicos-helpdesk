@@ -1,7 +1,14 @@
 package com.roberto.support.storage.handler;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.sql.Timestamp;
 
+@NoArgsConstructor
+@Setter
+@Getter
 public class ErrorResponse {
 
     private Timestamp timeStamp;
@@ -19,43 +26,4 @@ public class ErrorResponse {
         this.status = status;
     }
 
-    public Integer  getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Timestamp getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(Timestamp timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
 }

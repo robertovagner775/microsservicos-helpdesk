@@ -1,39 +1,24 @@
 package com.roberto.support.storage.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import java.util.ArrayList;
 import java.util.List;
 
-@Document
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@Entity(name = "file_ticket")
 public class FileTicket {
 
     @Id
     private Integer idTicket;
-    private List<Archive> files;
 
-    public FileTicket() {
-    }
-
-    public FileTicket(Integer idTicket, List<Archive> files) {
-        this.idTicket = idTicket;
-        this.files = files;
-    }
-
-    public FileTicket(Integer idTicket) {
-        this.idTicket = idTicket;
-    }
-
-    public Integer getIdTicket() {
-        return idTicket;
-    }
-
-    public void setIdTicket(Integer idTicket) {
-        this.idTicket = idTicket;
-    }
-
-    public List<Archive> getFiles() {
-        return files;
-    }
+    @OneToMany(mappedBy = "fileTicket", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<Archive> files = new ArrayList<Archive>();
 
 }

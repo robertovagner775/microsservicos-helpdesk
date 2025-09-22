@@ -21,11 +21,6 @@ import static reactor.core.publisher.Mono.when;
 @ExtendWith(MockitoExtension.class)
 class FileValidationTest {
 
-    @Mock
-    private List<MultipartFile> files;
-
-    @Mock
-    private List<String> extensionsPermited;
 
     @Autowired
     @InjectMocks
@@ -57,7 +52,7 @@ class FileValidationTest {
 
 
     @Test
-    void validateErrorExtension() throws FileException {
+    void validateErrors() throws FileException {
 
         MultipartFile file1 = new MockMultipartFile(
                 "file",

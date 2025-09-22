@@ -1,6 +1,7 @@
 package com.roberto.support.storage.services;
 
 import com.amazonaws.HttpMethod;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.ResponseHeaderOverrides;
@@ -19,13 +20,13 @@ public class StorageS3Service {
 
     private final AwsS3Client s3Client;
 
-    public String uploadFile(File file, String context, String bucket) {
+    protected String uploadFile(File file, String context, String bucket) {
         String key = UUID.randomUUID() + "_" + context;
         s3Client.s3Client().putObject(new PutObjectRequest(bucket, key, file));
         return key;
     }
     
-    public URL generateUrl(String bucket, String contentType,  String filename) {
+    protected URL generateUrl(String bucket, String contentType,  String filename) {
         Date expiration = new Date(1000 * 60 * 10);
 
         ResponseHeaderOverrides headers = new ResponseHeaderOverrides()
@@ -38,5 +39,12 @@ public class StorageS3Service {
                 .withResponseHeaders(headers);
 
         return s3Client.s3Client().generatePresignedUrl(request);
+    }
+
+    protected void removeFile(String key, String bucket) {
+
+        DeleteObjectRequest deleteObject = new DeleteObjectRequest(bucket, key);
+
+        s3Client.s3Client().deleteObject(deleteObject);
     }
 }
