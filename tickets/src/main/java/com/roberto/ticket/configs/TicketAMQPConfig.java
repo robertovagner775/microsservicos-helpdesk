@@ -56,6 +56,13 @@ public class TicketAMQPConfig {
                 .durable(RabbitMQConstants.QUEUE_CREATED_CATEGORY)
                 .build();
     }
+    
+    @Bean
+    public Queue createQueueUpdateDurationTicketAnalysis() {
+        return QueueBuilder
+                .durable(RabbitMQConstants.QUEUE_UPDATE_TICKET)
+                .build();
+    }
 
     @Bean
     public DirectExchange createDirectExchange() {
@@ -68,6 +75,14 @@ public class TicketAMQPConfig {
                 .bind(createQueueCategoryAnalysis())
                 .to(createDirectExchange())
                 .with(RabbitMQConstants.ROUTING_KEY_CATEGORY_CREATED);
+    }
+    
+    @Bean
+    public Binding createBindingTwoDirectExchange() {
+        return BindingBuilder
+                .bind(createQueueUpdateDurationTicketAnalysis())
+                .to(createDirectExchange())
+                .with(RabbitMQConstants.ROUTING_KEY_TICKET_UPDATE);
     }
 
     @Bean

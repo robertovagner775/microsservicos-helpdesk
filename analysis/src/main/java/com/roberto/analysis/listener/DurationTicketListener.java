@@ -18,4 +18,10 @@ public class DurationTicketListener {
     public void receiveMessageTicketCreated(@Payload TicketMessageDTO message) {
         service.save(message);
     }
+    
+    
+    @RabbitListener(queues = {RabbitConstants.QUEUE_UPDATE_TICKET})
+    public void receiveMessageTicketUpdate(@Payload TicketMessageDTO message) {
+        service.update(message);
+    }
 }

@@ -7,6 +7,9 @@ import com.roberto.ticket.handler.exceptions.ConflictEntityException;
 import com.roberto.ticket.handler.exceptions.NotFoundException;
 import com.roberto.ticket.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -27,6 +30,10 @@ public class CategoryService {
         return categoryRepository.findById(uuid).orElseThrow(
                 () -> new NotFoundException(uuid)
         );
+    }
+    
+    public List<Category> findAllCategories() {
+    	return categoryRepository.findAll();
     }
 
 }

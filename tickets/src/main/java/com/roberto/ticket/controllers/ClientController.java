@@ -17,6 +17,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RequiredArgsConstructor
 @Tag(name = "Clients")
@@ -33,11 +37,11 @@ public class ClientController {
             @ApiResponse(responseCode = "409", description = "Conflict Entity Exception", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping
-    public ResponseEntity createClient(@RequestBody @Valid ClientRequestDTO client, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Void> createClient(@RequestBody @Valid ClientRequestDTO client, UriComponentsBuilder uriBuilder) {
         ClientResponseDTO clientResponse = clientService.createClient(client);
 
         var uri = uriBuilder.path("/clients/{id}").buildAndExpand(clientResponse.id()).toUri();
-        return ResponseEntity.created(uri).body(clientResponse);
+        return ResponseEntity.created(uri).build();
     }
 
     @Operation(description = "Find client by id")
@@ -49,6 +53,16 @@ public class ClientController {
     public ResponseEntity<ClientResponseDTO> findClient(@PathVariable Integer id) {
         Client client = clientService.findClientByID(id);
         return ResponseEntity.ok(ClientMapper.toClientResponseDTO(client));
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> putClient(@PathVariable Integer id, @RequestBody ClientRequestDTO request) {
+
+        Client client = clientService.updateClient(id, request);
+
+        return ResponseEntity.ok().build();
+     
     }
 
 

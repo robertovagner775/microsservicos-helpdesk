@@ -2,6 +2,7 @@ package com.roberto.ticket.controllers;
 
 import com.roberto.ticket.dtos.mappers.CategoryMapper;
 import com.roberto.ticket.dtos.requests.CategoryRequestDTO;
+import com.roberto.ticket.dtos.responses.CategoryResponseDTO;
 import com.roberto.ticket.handler.ErrorResponse;
 import com.roberto.ticket.models.entities.Category;
 import com.roberto.ticket.producers.CategoryProducer;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @Tag(name = "Categories")
 @RequiredArgsConstructor
@@ -49,5 +51,13 @@ public class CategoryController {
         producer.sendMessageCategory(CategoryMapper.toMessage(category));
 
        return ResponseEntity.created(location).build();
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<CategoryResponseDTO>> getAllCategories() {
+    	return ResponseEntity.ok(service.findAllCategories()
+    			.stream()
+    			.map(c -> new CategoryResponseDTO(c.getId(), c.getTitle(), c.getDescription()))
+    			.toList());
     }
 }

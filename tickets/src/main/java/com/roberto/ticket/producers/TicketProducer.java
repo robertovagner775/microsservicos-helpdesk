@@ -15,4 +15,8 @@ public class TicketProducer {
     public void sendMessageTicketCreated(TicketMessageDTO message) {
         rabbitTemplate.convertAndSend(RabbitMQConstants.FANOUT_EXCHANGE_TICKET, "", message);
     }
+    
+    public void sendMessageTicketUpdate(TicketMessageDTO message) {
+        rabbitTemplate.convertAndSend(RabbitMQConstants.DIRECT_EXCHANGE_TICKET, RabbitMQConstants.ROUTING_KEY_TICKET_UPDATE, message);
+    }
 }
