@@ -11,6 +11,9 @@ import com.roberto.ticket.repositories.ClientRepository;
 import com.roberto.ticket.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -42,6 +45,19 @@ public class ClientService {
                 .orElseThrow(() -> new NotFoundException(id.toString()));
 
        return client;
+    }
+
+    public List<Client> findAllClients() {
+        return clientRepository.findAll();
+    }
+
+    public Client updateClient(Integer idClient, ClientRequestDTO request) {
+        Client client = this.findClientByID(idClient);
+
+        client.setName(request.name());
+        client.setTelephone(request.telephone());
+       
+        return clientRepository.save(client);
     }
     
 }

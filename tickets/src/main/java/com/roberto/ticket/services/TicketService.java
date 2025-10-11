@@ -1,11 +1,14 @@
 package com.roberto.ticket.services;
 
+import com.roberto.ticket.dtos.responses.StatusCountDTO;
+import com.roberto.ticket.dtos.responses.TicketDashboardResponseDTO;
 import com.roberto.ticket.dtos.responses.TicketResponseDTO;
 import com.roberto.ticket.models.entities.Category;
 import com.roberto.ticket.models.enums.Status;
 import com.roberto.ticket.repositories.Specs.TicketSpecs;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +22,10 @@ import com.roberto.ticket.repositories.TicketRepository;
 import com.roberto.ticket.repositories.ClientRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -65,10 +70,14 @@ public class TicketService {
 		return ticketRepository.findById(idTicket).orElseThrow(() -> new NotFoundException(idTicket.toString()));
 	}
 
-	public void updateStatusTicket(Integer idticket, Status status) {
+	public Ticket updateStatusTicket(Integer idticket, Status status) {
 		Ticket ticket = this.findByID(idticket);
 		ticket.setStatus(status);
-		ticketRepository.save(ticket);
+		return ticketRepository.save(ticket);
+	}
+
+	public TicketDashboardResponseDTO getDashboard(LocalDate dateStart, LocalDate dateEnd) {
+		return ticketRepository.findCountStatus(dateStart, dateEnd);
 	}
 
 	public List<TicketResponseDTO> findAllTickets(String title, String status, LocalDate dateStart) {

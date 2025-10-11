@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: storage-ms
+
+cloud:
+    aws:
+      endpoint:
+        uri: http://localhost:4566
+      s3:
+        endpoint: http://s3.localhost.localstack.cloud:4566
+      region:
+        static: us-east-1
+      credentials:
+        access-key: test
+        secret-key: test
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+  instance:
+    hostname: localhost
+    non-secure-port: ${server.port}
+    prefer-ip-address: true
+
+server:
+  port: 8084

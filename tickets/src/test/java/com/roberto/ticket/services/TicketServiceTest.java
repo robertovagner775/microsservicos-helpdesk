@@ -30,6 +30,9 @@ class TicketServiceTest {
 
     @Mock
     private ClientRepository clientRepository;
+    
+    @Mock
+	private CategoryService categoryService;
 
     @Mock
     private TechnicalService technicalService;
@@ -47,23 +50,15 @@ class TicketServiceTest {
     @Mock
     private Technical technical;
 
-
-    private TicketRequestDTO request;
-
     @Captor
     private ArgumentCaptor<Technical> technicalCaptor;
 
-    @BeforeEach
-    void setup() {
-        MockitoAnnotations.initMocks(this);
-        ticketService = new TicketService(ticketRepository, clientRepository, technicalService);
-    }
 
     @DisplayName("Ticket Creation: Execution Flow Test")
     @Test
     void createTicketExecutionFlowTest() {
 
-        this.request = TicketRequestDTO.createTicketRequest("Quebrei o computador da empresa", "durante o meu espediente eu quebrei o computador da empresa acidentalmente", "HIGH");
+        TicketRequestDTO request = TicketRequestDTO.createTicketRequest("Quebrei o computador da empresa", "durante o meu espediente eu quebrei o computador da empresa acidentalmente", "HIGH");
 
         when(clientRepository.findById(1)).thenReturn(Optional.of(client));
         when(technicalService.assignTicketToTechnical(any(Ticket.class))).thenReturn(technical);
@@ -76,8 +71,6 @@ class TicketServiceTest {
         verify(clientRepository).findById(1);
         verify(technicalService).assignTicketToTechnical(any(Ticket.class));
         verify(ticketRepository).save(any(Ticket.class));
-
-
     }
 
     @Test

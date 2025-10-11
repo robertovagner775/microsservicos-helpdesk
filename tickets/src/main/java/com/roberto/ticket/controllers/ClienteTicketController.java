@@ -38,7 +38,7 @@ public class ClienteTicketController {
 			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
 	@PostMapping
-	public ResponseEntity createTicket(@PathVariable Integer id, @RequestBody @Valid TicketRequestDTO ticket) {
+	public ResponseEntity<Void> createTicket(@PathVariable Integer id, @RequestBody @Valid TicketRequestDTO ticket) {
 		Ticket ticketReturn = ticketService.createTicket(ticket, id);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
@@ -67,10 +67,8 @@ public class ClienteTicketController {
 			@ApiResponse(responseCode = "404", description = "Resource not found", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
 	@DeleteMapping("/{idTicket}")
-	public ResponseEntity deleteTicketClient(@PathVariable Integer id, @PathVariable Integer idTicket) {
+	public ResponseEntity<Void> deleteTicketClient(@PathVariable Integer id, @PathVariable Integer idTicket) {
 		ticketService.deleteTicket(id, idTicket);
 		return ResponseEntity.noContent().build();
 	}
-
-    
 }
