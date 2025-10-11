@@ -26,4 +26,8 @@ public class DurationTicketService {
 
         return durationTicketRepository.save(ticketDuration);
     }
+    
+    public DurationTicket update(TicketMessageDTO message) {
+    	return this.save(message);
+    }
 }

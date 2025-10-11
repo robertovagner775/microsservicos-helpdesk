@@ -16,7 +16,7 @@ public class DurationTicketMapper {
                 message.id(),
                 message.description(),
                 LocalDateTime.now(),
-                "TICKET CREATED",
+                message.status(),
                 category
         );
     }

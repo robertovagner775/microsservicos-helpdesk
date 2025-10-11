@@ -2,6 +2,7 @@ package com.roberto.analysis.dtos.mappers;
 
 import com.roberto.analysis.dtos.requests.SlaRequestDTO;
 import com.roberto.analysis.dtos.responses.CategoryDTO;
+import com.roberto.analysis.dtos.responses.SlaDTO;
 import com.roberto.analysis.dtos.responses.SlaResponseDTO;
 import com.roberto.analysis.entities.Category;
 import com.roberto.analysis.entities.SLA;
@@ -36,4 +37,15 @@ public class SlaMapper {
                 categories
         );
    }
+   
+   public static SlaDTO toResponseTwo(SLA sla) {
+
+       return new SlaDTO(
+               sla.getId(),
+               sla.getTitle(),
+               sla.getDescription(),
+               sla.getTimeResponseMins(),
+               sla.getTimeResolutionMins()
+       );
+  }
 }
